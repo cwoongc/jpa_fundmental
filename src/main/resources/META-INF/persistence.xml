@@ -6,6 +6,9 @@
         <class>com.cwoongc.study.jpa_fundmental.member.entity.Member</class>
         <class>com.cwoongc.study.jpa_fundmental.member.entity.MemberM_1</class>
         <class>com.cwoongc.study.jpa_fundmental.member.entity.Team</class>
+        <class>com.cwoongc.study.jpa_fundmental.member.entity.MemberV1</class>
+        <class>com.cwoongc.study.jpa_fundmental.order.entity.OrderItemV1</class>
+        <class>com.cwoongc.study.jpa_fundmental.order.entity.OrderV1</class>
         <properties>
             <!-- spring.datasource -->
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/> <!-- spring.datasource.driver-class-name -->
@@ -26,6 +29,9 @@
 
             <!-- spring.jpa.hibernate.ddl-auto -->
             <property name="hibernate.hbm2ddl.auto" value="create"/>
+            
+            
+            <property name="hibernate.physical_naming_strategy" value="com.cwoongc.study.jpa_fundmental.common.jpa.PhysicalNamingStrategyImpl"/>
 
 
 
