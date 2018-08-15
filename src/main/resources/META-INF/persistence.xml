@@ -3,12 +3,17 @@
         xmlns="http://xmlns.jcp.org/xml/ns/persistence"
         version="2.1">
     <persistence-unit name="p-unit">
-        <class>com.cwoongc.study.jpa_fundmental.member.entity.Member</class>
-        <class>com.cwoongc.study.jpa_fundmental.member.entity.MemberM_1</class>
-        <class>com.cwoongc.study.jpa_fundmental.member.entity.Team</class>
-        <class>com.cwoongc.study.jpa_fundmental.member.entity.MemberV1</class>
-        <class>com.cwoongc.study.jpa_fundmental.order.entity.OrderItemV1</class>
-        <class>com.cwoongc.study.jpa_fundmental.order.entity.OrderV1</class>
+        <!--<class>com.cwoongc.study.jpa_fundmental.member.entity.Member</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.member.entity.MemberM_1</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.member.entity.Team</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.member.entity.MemberV1</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.order.entity.OrderItemV1</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.order.entity.OrderV1</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.item.entity.ItemV1</class>-->
+        <class>com.cwoongc.study.jpa_fundmental.item.entity.ItemV2</class>
+        <class>com.cwoongc.study.jpa_fundmental.member.entity.MemberV2</class>
+        <class>com.cwoongc.study.jpa_fundmental.order.entity.OrderItemV2</class>
+        <class>com.cwoongc.study.jpa_fundmental.order.entity.OrderV2</class>
         <properties>
             <!-- spring.datasource -->
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/> <!-- spring.datasource.driver-class-name -->

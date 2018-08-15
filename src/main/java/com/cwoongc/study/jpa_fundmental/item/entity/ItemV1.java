@@ -1,4 +1,4 @@
-package com.cwoongc.study.jpa_fundmental.Item.entity;
+package com.cwoongc.study.jpa_fundmental.item.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
