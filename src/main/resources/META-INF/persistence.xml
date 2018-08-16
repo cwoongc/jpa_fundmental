@@ -10,10 +10,17 @@
         <!--<class>com.cwoongc.study.jpa_fundmental.order.entity.OrderItemV1</class>-->
         <!--<class>com.cwoongc.study.jpa_fundmental.order.entity.OrderV1</class>-->
         <!--<class>com.cwoongc.study.jpa_fundmental.item.entity.ItemV1</class>-->
-        <class>com.cwoongc.study.jpa_fundmental.item.entity.ItemV2</class>
-        <class>com.cwoongc.study.jpa_fundmental.member.entity.MemberV2</class>
-        <class>com.cwoongc.study.jpa_fundmental.order.entity.OrderItemV2</class>
-        <class>com.cwoongc.study.jpa_fundmental.order.entity.OrderV2</class>
+        <!--<class>com.cwoongc.study.jpa_fundmental.item.entity.ItemV2</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.member.entity.MemberV2</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.order.entity.OrderItemV2</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.order.entity.OrderV2</class>-->
+
+        <class>com.cwoongc.study.jpa_fundmental.item.entity.ItemV3</class>
+        <class>com.cwoongc.study.jpa_fundmental.member.entity.MemberV3</class>
+        <class>com.cwoongc.study.jpa_fundmental.order.entity.OrderItemV3</class>
+        <class>com.cwoongc.study.jpa_fundmental.order.entity.OrderV3</class>
+        <class>com.cwoongc.study.jpa_fundmental.category.entity.CategoryV3</class>
+        <class>com.cwoongc.study.jpa_fundmental.delivery.entity.DeliveryV3</class>
         <properties>
             <!-- spring.datasource -->
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/> <!-- spring.datasource.driver-class-name -->

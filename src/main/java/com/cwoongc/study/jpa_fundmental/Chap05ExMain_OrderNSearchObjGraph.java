@@ -1,5 +1,6 @@
 package com.cwoongc.study.jpa_fundmental;
 
+import com.cwoongc.study.jpa_fundmental.common.jpa.TransactionConsumer;
 import com.cwoongc.study.jpa_fundmental.item.entity.ItemV2;
 import com.cwoongc.study.jpa_fundmental.member.entity.MemberV2;
 import com.cwoongc.study.jpa_fundmental.order.entity.OrderItemV2;
@@ -8,12 +9,11 @@ import com.cwoongc.study.jpa_fundmental.order.type.OrderStatus;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.Date;
 
 
-public class Chap05ExMain {
+public class Chap05ExMain_OrderNSearchObjGraph {
 
     private static Long o1Id = null;
 
@@ -22,29 +22,10 @@ public class Chap05ExMain {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("p-unit"); //Session Factory
 
 
-        consume(emf, Chap05ExMain::createData);
-        consume(emf, Chap05ExMain::searchObjGraph);
+        TransactionConsumer.consume(emf, Chap05ExMain_OrderNSearchObjGraph::createData);
+        TransactionConsumer.consume(emf, Chap05ExMain_OrderNSearchObjGraph::searchObjGraph);
 
         emf.close();
-    }
-
-
-    private static void consume(EntityManagerFactory emf, java.util.function.Consumer<EntityManager> jpaConsumer) {
-        EntityManager em = emf.createEntityManager(); //Session, Do Not Share EntityManager!!
-
-        EntityTransaction tx = em.getTransaction();
-
-        try {
-            tx.begin();
-            jpaConsumer.accept(em);
-            tx.commit(); //flush
-
-
-        } catch (Exception e) {
-            tx.rollback();
-        } finally {
-            em.close();
-        }
     }
 
     private static void createData(EntityManager em) {
@@ -64,7 +45,9 @@ public class Chap05ExMain {
 
         em.persist(i1);
 
-//////////////////////
+        /**
+         * 주문 시작
+         */
 
         OrderV2 o1 = new OrderV2();
         o1.setOrderDate(new Date());
@@ -84,10 +67,6 @@ public class Chap05ExMain {
         o1Id = o1.getId();
 
     }
-
-
-
-
 
 
 
