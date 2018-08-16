@@ -1,6 +1,7 @@
 package com.cwoongc.study.jpa_fundmental.delivery.entity;
 
 import com.cwoongc.study.jpa_fundmental.delivery.type.DeliveryStatus;
+import com.cwoongc.study.jpa_fundmental.order.entity.OrderV3;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,5 +25,8 @@ public class DeliveryV3 {
 
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status;
+
+    @OneToOne(mappedBy = "delivery")
+    private OrderV3 order;
 
 }
