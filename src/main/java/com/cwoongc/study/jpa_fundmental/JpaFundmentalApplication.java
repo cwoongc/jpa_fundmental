@@ -143,7 +143,7 @@ public class JpaFundmentalApplication {
         //목록조회
         // 이 시점에 등록(insert), 수정(update), 목록조회 (select) 가 동시에 순서대로 DB로 날라가고 (목록조회시엔 현재 모든 Member목록을 보려면 영속성 컨텍스트 상에선 알수가 없고 DB에 가야되기에 계류중인 SQL을 모두 실행)
         List<Member> members =
-                em.createQuery("select m from Member m", Member.class).getResultList(); //flush->dirty check, twb-update1 -> DB insert, update, select (FlushModeType.AUTO)
+                em.createQuery("select m from MemberV1 m", Member.class).getResultList(); //flush->dirty check, twb-update1 -> DB insert, update, select (FlushModeType.AUTO)
 
 
         System.out.println("members.size="+members.size());

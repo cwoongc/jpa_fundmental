@@ -15,12 +15,58 @@
         <!--<class>com.cwoongc.study.jpa_fundmental.order.entity.OrderItemV2</class>-->
         <!--<class>com.cwoongc.study.jpa_fundmental.order.entity.OrderV2</class>-->
 
-        <class>com.cwoongc.study.jpa_fundmental.item.entity.ItemV3</class>
-        <class>com.cwoongc.study.jpa_fundmental.member.entity.MemberV3</class>
-        <class>com.cwoongc.study.jpa_fundmental.order.entity.OrderItemV3</class>
-        <class>com.cwoongc.study.jpa_fundmental.order.entity.OrderV3</class>
-        <class>com.cwoongc.study.jpa_fundmental.category.entity.CategoryV3</class>
-        <class>com.cwoongc.study.jpa_fundmental.delivery.entity.DeliveryV3</class>
+        <!--<class>com.cwoongc.study.jpa_fundmental.item.entity.ItemV3</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.member.entity.MemberV3</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.order.entity.OrderItemV3</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.order.entity.OrderV3</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.category.entity.CategoryV3</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.delivery.entity.DeliveryV3</class>-->
+
+        <!--Chap07_MappedSuperClass-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.item.entity.ItemV4</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.item.entity.AlbumV4</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.item.entity.MovieV4</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.item.entity.BookV4</class>-->
+
+        <!--Chap07_MappedSuperClass-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.member.entity.MemberV5</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.member.entity.PartyV5</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.member.entity.SellerV5</class>-->
+
+        <!--Chap0703_IdClass_Main-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.composite_key.entity.ParentV1</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.composite_key.entity.ChildV1</class>-->
+
+        <!--Chap0703_EmbeddedId_Main-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.composite_key.entity.ParentV2</class>-->
+
+
+        <!--Chap0703_IdClass_Identifying_Main-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.composite_key.entity.ParentV3</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.composite_key.entity.ChildV3</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.composite_key.entity.GrandChildV3</class>-->
+
+        <!--Chap0703_EmbeddedId_Identifying_MapsId_Main-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.composite_key.entity.ParentV4</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.composite_key.entity.ChildV4</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.composite_key.entity.GrandChildV4</class>-->
+
+
+        <!--Chap0703_OneToOne_Identifying_MapsId_Main-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.board.entity.BoardV1</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.board.entity.BoardDetailV1</class>-->
+        <!---->
+        <!--<class>com.cwoongc.study.jpa_fundmental.board.entity.BoardV2</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.board.entity.BoardDetailV2</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.board.entity.BoardV3</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.board.entity.BoardDetailV3</class>-->
+
+        <!--Chap0902_Value_embedded_Main-->
+        <class>com.cwoongc.study.jpa_fundmental.embedded_type.entity.MemberV2</class>
+        <class>com.cwoongc.study.jpa_fundmental.embedded_type.entity.PhoneServiceProvider</class>
+
+
+
         <properties>
             <!-- spring.datasource -->
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/> <!-- spring.datasource.driver-class-name -->
