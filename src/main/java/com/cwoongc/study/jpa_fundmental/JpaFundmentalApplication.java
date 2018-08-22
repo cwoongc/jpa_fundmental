@@ -1,18 +1,17 @@
 package com.cwoongc.study.jpa_fundmental;
 
-import com.cwoongc.study.jpa_fundmental.member.entity.Member;
-import com.cwoongc.study.jpa_fundmental.member.entity.MemberM_1;
-import com.cwoongc.study.jpa_fundmental.member.entity.Team;
-import com.cwoongc.study.jpa_fundmental.member.type.RoleType;
+import com.cwoongc.study.jpa_fundmental.embedded_type.entity.MemberV2;
+import com.cwoongc.study.jpa_fundmental.embedded_type.entity.value.Address;
+import com.cwoongc.study.jpa_fundmental.embedded_type.entity.value.PhoneNumber;
+import com.cwoongc.study.jpa_fundmental.embedded_type.entity.value.Zipcode;
+import com.cwoongc.study.jpa_fundmental.embedded_type.repository.MemberV2Repository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import java.util.Date;
-import java.util.List;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 //import org.springframework.boot.CommandLineRunner;
 //import org.springframework.boot.SpringApplication;
@@ -25,13 +24,95 @@ import java.util.List;
 //import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 //import javax.persistence.spi.PersistenceProvider;
 
-
+@EnableJpaRepositories(basePackageClasses = JpaFundmentalApplication.class)
 @SpringBootApplication
 public class JpaFundmentalApplication {
 
+    @Autowired
+    private MemberV2Repository memberV2Repository;
+
     public static void main(String[] args) {
         SpringApplication.run(JpaFundmentalApplication.class, args);
+    }
 
+
+    @Bean
+    public CommandLineRunner run(ApplicationContext ctx) {
+        return args -> {
+
+            MemberV2 member1 = MemberV2.builder()
+                    .name("wcchoi")
+                    .homeAddress(Address.builder()
+                            .city("seoul")
+                            .state("Korea")
+                            .street("yeong-dong-dae-ro")
+                            .zipcode(Zipcode.builder()
+                                    .zip("06080")
+                                    .plusFour("?")
+                                    .build()
+                            )
+                            .build()
+                    ).companyAddress(Address.builder()
+                            .city("seoul")
+                            .state("Korea")
+                            .street("seoul-ro")
+                            .zipcode(Zipcode.builder()
+                                    .zip("06084")
+                                    .plusFour("?")
+                                    .build()
+                            )
+                            .build()
+                    ).phoneNumber(PhoneNumber.builder()
+                            .areaCode("82")
+                            .localNumber("1090487331")
+                            .build()
+                    )
+                    .build();
+
+            memberV2Repository.save(member1);
+
+            MemberV2 member2 = MemberV2.builder()
+                    .name("hymoon")
+                    .homeAddress(Address.builder()
+                            .city("seoul")
+                            .state("Korea")
+                            .street("yeong-dong-dae-ro")
+                            .zipcode(Zipcode.builder()
+                                    .zip("06080")
+                                    .plusFour("?")
+                                    .build()
+                            )
+                            .build()
+                    ).companyAddress(Address.builder()
+                            .city("seoul")
+                            .state("Korea")
+                            .street("seoul-ro")
+                            .zipcode(Zipcode.builder()
+                                    .zip("06084")
+                                    .plusFour("?")
+                                    .build()
+                            )
+                            .build()
+                    ).phoneNumber(PhoneNumber.builder()
+                            .areaCode("82")
+                            .localNumber("1092553405")
+                            .build()
+                    )
+                    .build();
+
+            memberV2Repository.save(member2);
+
+            memberV2Repository.findByNameAndHomeAddress_City("hymoon","seoul")
+                    .stream()
+                    .forEach(m->{
+                        System.out.println(m.getPhoneNumber().getLocalNumber());
+                    });
+
+        };
+    }
+
+//    public static void main(String[] args) {
+//
 //        EntityManagerFactory emf = Persistence.createEntityManagerFactory("p-unit"); //Session Factory
 //
 //        EntityManager em = emf.createEntityManager(); //Session, Do Not Share EntityManager!!
@@ -66,7 +147,7 @@ public class JpaFundmentalApplication {
 //            em.close();
 //        }
 //        emf.close();
-    }
+//    }
 
 
 

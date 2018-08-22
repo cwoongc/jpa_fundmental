@@ -1,6 +1,6 @@
 package com.cwoongc.study.jpa_fundmental.order.entity;
 
-import com.cwoongc.study.jpa_fundmental.member.entity.MemberV2;
+import com.cwoongc.study.jpa_fundmental.member.entity.MemberV2_;
 import com.cwoongc.study.jpa_fundmental.order.type.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +24,7 @@ public class OrderV2 {
 
     @JoinColumn(name="MEMBER_ID")
     @ManyToOne(fetch = FetchType.LAZY)
-    private MemberV2 member;
+    private MemberV2_ member;
 
     @OneToMany(mappedBy = "order")
     private List<OrderItemV2> orderItems = new ArrayList<>();
@@ -37,7 +37,7 @@ public class OrderV2 {
     private OrderStatus orderStatus;
 
     @Access(AccessType.PROPERTY)
-    public void setMember(MemberV2 member) {
+    public void setMember(MemberV2_ member) {
         if(this.member != null) this.member.getOrders().remove(this);
 
         this.member = member;

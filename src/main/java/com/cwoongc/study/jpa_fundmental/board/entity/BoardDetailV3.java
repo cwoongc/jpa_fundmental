@@ -9,8 +9,8 @@ import javax.persistence.*;
  * @IdClass가 아니라 별도 @Id private Long boardId 속성을 만들고
  * @MapsId를 board에 부여해야한다.
  */
-@Entity
-@IdClass(BoardDetailV3Id.class)
+//@Entity
+//@IdClass(BoardDetailV3Id.class)
 public class BoardDetailV3 {
 
     @Id

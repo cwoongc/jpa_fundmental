@@ -12,7 +12,7 @@ import java.util.List;
 @Table(name="member")
 @Getter
 @Setter
-public class MemberV2 {
+public class MemberV2_ {
 
     @Id
     @TableGenerator(name="member.member_id", pkColumnValue = "member.member_id")

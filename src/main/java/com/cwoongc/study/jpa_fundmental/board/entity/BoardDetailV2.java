@@ -2,7 +2,7 @@ package com.cwoongc.study.jpa_fundmental.board.entity;
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 public class BoardDetailV2 {
 
     /*

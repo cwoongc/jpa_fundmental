@@ -2,7 +2,7 @@ package com.cwoongc.study.jpa_fundmental;
 
 import com.cwoongc.study.jpa_fundmental.common.jpa.TransactionConsumer;
 import com.cwoongc.study.jpa_fundmental.item.entity.ItemV2;
-import com.cwoongc.study.jpa_fundmental.member.entity.MemberV2;
+import com.cwoongc.study.jpa_fundmental.member.entity.MemberV2_;
 import com.cwoongc.study.jpa_fundmental.order.entity.OrderItemV2;
 import com.cwoongc.study.jpa_fundmental.order.entity.OrderV2;
 import com.cwoongc.study.jpa_fundmental.order.type.OrderStatus;
@@ -30,7 +30,7 @@ public class Chap05ExMain_OrderNSearchObjGraph {
 
     private static void createData(EntityManager em) {
 
-        MemberV2 m1 = new MemberV2();
+        MemberV2_ m1 = new MemberV2_();
         m1.setName("woong-chul");
         m1.setCity("seoul");
         m1.setStreet("30-7");
@@ -74,7 +74,7 @@ public class Chap05ExMain_OrderNSearchObjGraph {
 
         OrderV2 o1 = em.find(OrderV2.class, o1Id);
 
-        MemberV2 m1 = o1.getMember();
+        MemberV2_ m1 = o1.getMember();
 
         OrderItemV2 oi1 = o1.getOrderItems().get(0);
 
