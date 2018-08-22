@@ -35,4 +35,11 @@ dependencies {
     compileOnly('org.projectlombok:lombok')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     compile('org.hibernate:hibernate-entitymanager')
+
+    /**
+     * querydsl dependencies
+     */
+    compile ("com.querydsl:querydsl-core")
+    compile ("com.querydsl:querydsl-apt")
+    compile ("com.querydsl:querydsl-jpa")
 }
