@@ -4,9 +4,16 @@ buildscript {
     }
     repositories {
         mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+
+        /**
+         * plugins for working queryDSL properly with Lombok
+         */
+        classpath "gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10"
+        classpath("io.franzbecker:gradle-lombok:1.8")
     }
 }
 
@@ -15,13 +22,87 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
+/**
+ * plugins for working queryDSL properly with Lombok
+ */
+apply plugin: 'io.franzbecker.gradle-lombok'
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
+
 group = 'com.cwoongc.study'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    jcenter()
 }
+
+
+def querydslVersion = "4.1.4"
+querydsl {
+    library = "com.querydsl:querydsl-apt:$querydslVersion"
+    querydslDefault = true
+    jpa = true
+}
+
+project.afterEvaluate {
+    project.tasks.compileQuerydsl.options.compilerArgs = [
+            '-proc:only',
+            '-processor',
+            project.querydsl.processors() + ',lombok.launch.AnnotationProcessorHider$AnnotationProcessor'
+    ]
+}
+
+
+//def querydslOutputDir = "src/main/qclass"
+//
+//sourceSets {
+//    main {
+//        java {
+//            srcDir "${querydslOutputDir}"
+//        }
+//    }
+//}
+//
+//sourceSets.main.java.srcDirs.each { dir ->
+//    println(dir)
+//}
+//
+//task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+//
+//
+//        file(new File(projectDir, "/${querydslOutputDir}")).deleteDir()
+//        file(new File(projectDir, "/${querydslOutputDir}")).mkdirs()
+//        source = sourceSets.main.java
+//        classpath = configurations.compile + configurations.compileOnly
+//        options.compilerArgs = [
+//                "-proc:only",
+//                "-processor", 'com.querydsl.apt.jpa.JPAAnnotationProcessor,lombok.launch.AnnotationProcessorHider$AnnotationProcessor'
+//        ]
+//        destinationDir = file("${querydslOutputDir}")
+//
+//
+//}
+//
+//compileJava.dependsOn(generateQueryDSL)
+//
+//
+///**
+// * gradle clean task 실행 시 querydsl 경로 제거
+// */
+//clean {
+//    doLast {
+//        file(new File(projectDir,"${querydslOutputDir}")).deleteDir()
+//    }
+//}
+
+//springBoot {
+//    mainClassName = "com.cwoongc.study.jpa_fundmental.JpaFundmentalApplication"
+//}
+
+
+
+
 
 
 dependencies {
@@ -29,17 +110,24 @@ dependencies {
 //    compile('org.springframework.boot:spring-boot-starter-data')
 
 //    compile('org.springframework.boot:spring-boot-starter-jdbc')
-//    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-web') {
+        exclude module: "spring-boot-starter-tomcat"
+    }
 //    runtime('org.springframework.boot:spring-boot-devtools')
     runtime('mysql:mysql-connector-java')
     compileOnly('org.projectlombok:lombok')
+    testCompileOnly('org.projectlombok:lombok')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+
     compile('org.hibernate:hibernate-entitymanager')
 
     /**
      * querydsl dependencies
      */
-    compile ("com.querydsl:querydsl-core")
-    compile ("com.querydsl:querydsl-apt")
-    compile ("com.querydsl:querydsl-jpa")
+    compile("com.querydsl:querydsl-core:$querydslVersion")
+    compile("com.querydsl:querydsl-jpa:$querydslVersion")
+    compile("com.querydsl:querydsl-sql:$querydslVersion")
+
 }
+
+

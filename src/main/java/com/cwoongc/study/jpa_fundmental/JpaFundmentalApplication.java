@@ -4,6 +4,13 @@ import com.cwoongc.study.jpa_fundmental.member.entity.Member;
 import com.cwoongc.study.jpa_fundmental.member.entity.MemberM_1;
 import com.cwoongc.study.jpa_fundmental.member.entity.Team;
 import com.cwoongc.study.jpa_fundmental.member.type.RoleType;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import javax.persistence.EntityManager;
+import java.util.Date;
+import java.util.List;
+
 //import org.springframework.boot.CommandLineRunner;
 //import org.springframework.boot.SpringApplication;
 //import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,51 +20,48 @@ import com.cwoongc.study.jpa_fundmental.member.type.RoleType;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Primary;
 //import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-
-import javax.persistence.*;
 //import javax.persistence.spi.PersistenceProvider;
-import java.util.Date;
-import java.util.List;
 
-//@SpringBootApplication
+
+@SpringBootApplication
 public class JpaFundmentalApplication {
 
     public static void main(String[] args) {
-//        SpringApplication.run(JpaFundmentalApplication.class, args);
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("p-unit"); //Session Factory
-
-        EntityManager em = emf.createEntityManager(); //Session, Do Not Share EntityManager!!
-
-        EntityTransaction tx = em.getTransaction();
-
-        try {
-            tx.begin();
+        SpringApplication.run(JpaFundmentalApplication.class, args);
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("p-unit"); //Session Factory
+//
+//        EntityManager em = emf.createEntityManager(); //Session, Do Not Share EntityManager!!
+//
+//        EntityTransaction tx = em.getTransaction();
+//
+//        try {
+//            tx.begin();
 //            logic(em);
 //            logic_m_1(em);
-            login_2_Fetch_Type(em);
-            tx.commit(); //flush
-            em.close();
-
-
-            em = emf.createEntityManager();
-            tx = em.getTransaction();
-            tx.begin();
-            login_eager(em);
-            tx.commit();
-            em.close();
-
-            em = emf.createEntityManager();
-            tx = em.getTransaction();
-            tx.begin();
-            login_lazy(em);
-            tx.commit();
-
-        } catch (Exception e) {
-            tx.rollback();
-        } finally {
-            em.close();
-        }
-        emf.close();
+//            login_2_Fetch_Type(em);
+//            tx.commit(); //flush
+//            em.close();
+//
+//
+//            em = emf.createEntityManager();
+//            tx = em.getTransaction();
+//            tx.begin();
+//            login_eager(em);
+//            tx.commit();
+//            em.close();
+//
+//            em = emf.createEntityManager();
+//            tx = em.getTransaction();
+//            tx.begin();
+//            login_lazy(em);
+//            tx.commit();
+//
+//        } catch (Exception e) {
+//            tx.rollback();
+//        } finally {
+//            em.close();
+//        }
+//        emf.close();
     }
 
 
