@@ -23,10 +23,10 @@
         <!--<class>com.cwoongc.study.jpa_fundmental.delivery.entity.DeliveryV3</class>-->
 
         <!--Chap07_MappedSuperClass-->
-        <!--<class>com.cwoongc.study.jpa_fundmental.item.entity.ItemV4</class>-->
-        <!--<class>com.cwoongc.study.jpa_fundmental.item.entity.AlbumV4</class>-->
-        <!--<class>com.cwoongc.study.jpa_fundmental.item.entity.MovieV4</class>-->
-        <!--<class>com.cwoongc.study.jpa_fundmental.item.entity.BookV4</class>-->
+        <class>com.cwoongc.study.jpa_fundmental.item.entity.ItemV4</class>
+        <class>com.cwoongc.study.jpa_fundmental.item.entity.AlbumV4</class>
+        <class>com.cwoongc.study.jpa_fundmental.item.entity.MovieV4</class>
+        <class>com.cwoongc.study.jpa_fundmental.item.entity.BookV4</class>
 
         <!--Chap07_MappedSuperClass-->
         <!--<class>com.cwoongc.study.jpa_fundmental.member.entity.MemberV5</class>-->
