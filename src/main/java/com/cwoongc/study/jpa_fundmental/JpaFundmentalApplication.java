@@ -4,10 +4,13 @@ import com.cwoongc.study.jpa_fundmental.member.entity.Member;
 import com.cwoongc.study.jpa_fundmental.member.entity.MemberM_1;
 import com.cwoongc.study.jpa_fundmental.member.entity.Team;
 import com.cwoongc.study.jpa_fundmental.member.type.RoleType;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +31,7 @@ public class JpaFundmentalApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(JpaFundmentalApplication.class, args);
+
 //        EntityManagerFactory emf = Persistence.createEntityManagerFactory("p-unit"); //Session Factory
 //
 //        EntityManager em = emf.createEntityManager(); //Session, Do Not Share EntityManager!!
@@ -123,6 +127,9 @@ public class JpaFundmentalApplication {
 //
 //        };
 //    }
+
+
+    /*
 
     public static void logic(EntityManager em) {
 
@@ -264,4 +271,8 @@ public class JpaFundmentalApplication {
         System.out.println(t1);
 
     }
+
+    */
+
+
 }

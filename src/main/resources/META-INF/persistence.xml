@@ -76,7 +76,7 @@
 
             <!-- spring.jpa -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL57Dialect"/> <!-- spring.jpa.database-platform -->
-            <property name="hibernate.show_sql" value="true"/> <!-- spring.jpa.show-sql -->
+            <!--<property name="hibernate.show_sql" value="true"/> &lt;!&ndash; spring.jpa.show-sql &ndash;&gt;-->
 
 
             <!--   -->

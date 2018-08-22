@@ -3,7 +3,9 @@ package com.cwoongc.study.jpa_fundmental.embedded_type.entity;
 import com.cwoongc.study.jpa_fundmental.embedded_type.entity.value.Address;
 import com.cwoongc.study.jpa_fundmental.embedded_type.entity.value.Period;
 import com.cwoongc.study.jpa_fundmental.embedded_type.entity.value.PhoneNumber;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -12,6 +14,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class MemberV2 {
 
     @Id
@@ -36,6 +39,16 @@ public class MemberV2 {
 
 
     @Embedded PhoneNumber phoneNumber;
+
+
+    @Builder
+    public MemberV2(String name, Period workPeriod, Address homeAddress, Address companyAddress, PhoneNumber phoneNumber) {
+        this.name = name;
+        this.workPeriod = workPeriod;
+        this.homeAddress = homeAddress;
+        this.companyAddress = companyAddress;
+        this.phoneNumber = phoneNumber;
+    }
 
 
 
