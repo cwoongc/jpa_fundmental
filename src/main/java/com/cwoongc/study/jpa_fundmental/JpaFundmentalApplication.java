@@ -11,7 +11,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+import java.util.List;
 
 //import org.springframework.boot.CommandLineRunner;
 //import org.springframework.boot.SpringApplication;
@@ -107,6 +112,26 @@ public class JpaFundmentalApplication {
                     .forEach(m->{
                         System.out.println(m.getPhoneNumber().getLocalNumber());
                     });
+
+
+            /**
+             * Pageable, PageRequest, PageRequestOf, Sort, Page<T>
+             */
+            PageRequest pageRequest = PageRequest.of(0,10, new Sort(Sort.Direction.DESC,"name"));
+
+            Page<MemberV2> memberV2Page = memberV2Repository.findByNameStartingWith("hy", pageRequest);
+
+            List<MemberV2> contents = memberV2Page.getContent(); //조회된 데이터
+            int totalPage = memberV2Page.getTotalPages(); //전체 페이지수
+            boolean hasNextPage = memberV2Page.hasNext(); //다음페이지 존재여부
+
+            contents.stream()
+                    .forEachOrdered(m-> System.out.println(m.getName()));
+
+            System.out.println(totalPage);
+            System.out.println(hasNextPage);
+
+
 
         };
     }
