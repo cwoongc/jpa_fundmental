@@ -1,10 +1,14 @@
 package com.cwoongc.study.jpa_fundmental;
 
 import com.cwoongc.study.jpa_fundmental.embedded_type.entity.MemberV2;
-import com.cwoongc.study.jpa_fundmental.embedded_type.entity.value.Address;
 import com.cwoongc.study.jpa_fundmental.embedded_type.entity.value.PhoneNumber;
 import com.cwoongc.study.jpa_fundmental.embedded_type.entity.value.Zipcode;
 import com.cwoongc.study.jpa_fundmental.embedded_type.repository.MemberV2Repository;
+import com.cwoongc.study.jpa_fundmental.jpql.entity.JpMember;
+import com.cwoongc.study.jpa_fundmental.jpql.entity.JpTeam;
+import com.cwoongc.study.jpa_fundmental.jpql.entity.value.Address;
+import com.cwoongc.study.jpa_fundmental.jpql.repository.JpMemberRepository;
+import com.cwoongc.study.jpa_fundmental.jpql.repository.JpTeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +20,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.List;
 
 //import org.springframework.boot.CommandLineRunner;
@@ -36,6 +42,14 @@ public class JpaFundmentalApplication {
     @Autowired
     private MemberV2Repository memberV2Repository;
 
+    @Autowired
+    private JpMemberRepository jpMemberRepository;
+
+    @Autowired
+    private JpTeamRepository jpTeamRepository;
+
+
+
     public static void main(String[] args) {
         SpringApplication.run(JpaFundmentalApplication.class, args);
     }
@@ -45,96 +59,206 @@ public class JpaFundmentalApplication {
     public CommandLineRunner run(ApplicationContext ctx) {
         return args -> {
 
-            MemberV2 member1 = MemberV2.builder()
+
+
+            JpMember m1 = JpMember.builder()
                     .name("wcchoi")
-                    .homeAddress(Address.builder()
-                            .city("seoul")
-                            .state("Korea")
-                            .street("yeong-dong-dae-ro")
-                            .zipcode(Zipcode.builder()
-                                    .zip("06080")
-                                    .plusFour("?")
-                                    .build()
-                            )
-                            .build()
-                    ).companyAddress(Address.builder()
-                            .city("seoul")
-                            .state("Korea")
-                            .street("seoul-ro")
-                            .zipcode(Zipcode.builder()
-                                    .zip("06084")
-                                    .plusFour("?")
-                                    .build()
-                            )
-                            .build()
-                    ).phoneNumber(PhoneNumber.builder()
-                            .areaCode("82")
-                            .localNumber("1090487331")
-                            .build()
-                    )
+                    .age(39)
                     .build();
 
-            memberV2Repository.save(member1);
+            jpMemberRepository.save(m1);
 
-            MemberV2 member2 = MemberV2.builder()
+            JpMember m2 = JpMember.builder()
                     .name("hymoon")
-                    .homeAddress(Address.builder()
-                            .city("seoul")
-                            .state("Korea")
-                            .street("yeong-dong-dae-ro")
-                            .zipcode(Zipcode.builder()
-                                    .zip("06080")
-                                    .plusFour("?")
-                                    .build()
-                            )
-                            .build()
-                    ).companyAddress(Address.builder()
-                            .city("seoul")
-                            .state("Korea")
-                            .street("seoul-ro")
-                            .zipcode(Zipcode.builder()
-                                    .zip("06084")
-                                    .plusFour("?")
-                                    .build()
-                            )
-                            .build()
-                    ).phoneNumber(PhoneNumber.builder()
-                            .areaCode("82")
-                            .localNumber("1092553405")
-                            .build()
-                    )
+                    .age(35)
                     .build();
 
-            memberV2Repository.save(member2);
+            jpMemberRepository.save(m2);
 
-            memberV2Repository.findByNameAndHomeAddress_City("hymoon","seoul")
-                    .stream()
-                    .forEach(m->{
-                        System.out.println(m.getPhoneNumber().getLocalNumber());
-                    });
+            JpMember m3 = JpMember.builder()
+                    .name("swchoi")
+                    .age(9)
+                    .build();
+
+            jpMemberRepository.save(m3);
+
+            JpTeam t1 = JpTeam.builder()
+                    .name("Data Engineering")
+                    .build();
+
+            jpTeamRepository.save(t1);
+
+            JpTeam t2 = JpTeam.builder()
+                    .name("Finance")
+                    .build();
+
+            jpTeamRepository.save(t2);
+
+            jpTeamRepository.flush();
 
 
-            /**
-             * Pageable, PageRequest, PageRequestOf, Sort, Page<T>
-             */
-            PageRequest pageRequest = PageRequest.of(0,10, new Sort(Sort.Direction.DESC,"name"));
+            m1.setTeam(t1);
 
-            Page<MemberV2> memberV2Page = memberV2Repository.findByNameStartingWith("hy", pageRequest);
+            m2.setTeam(t2);
 
-            List<MemberV2> contents = memberV2Page.getContent(); //조회된 데이터
-            int totalPage = memberV2Page.getTotalPages(); //전체 페이지수
-            boolean hasNextPage = memberV2Page.hasNext(); //다음페이지 존재여부
+            m3.setTeam(t2);
+
+
+            com.cwoongc.study.jpa_fundmental.jpql.entity.value.Address a1 = Address.builder()
+                    .city("seoul")
+                    .steet("30-7")
+                    .state("korea")
+                    .build();
+
+            m1.setAddress(a1);
+            m2.setAddress(a1);
+            m3.setAddress(a1);
+
+            jpMemberRepository.save(m1);
+            jpMemberRepository.save(m2);
+            jpMemberRepository.save(m3);
+
+
+            jpMemberRepository.flush();
+
+
+
+
+            PageRequest pageRequest = PageRequest.of(1,2, new Sort(Sort.Direction.DESC,"name"));
+
+
+            Page<JpMember> jpMemberPage = jpMemberRepository.findAll(pageRequest);
+
+            List<JpMember> contents = jpMemberPage.getContent();
+            int totalPage = jpMemberPage.getTotalPages();
+            boolean hasNextPage = jpMemberPage.hasNext();
 
             contents.stream()
-                    .forEachOrdered(m-> System.out.println(m.getName()));
+                    .forEachOrdered(m->System.out.println(m));
 
             System.out.println(totalPage);
             System.out.println(hasNextPage);
 
 
 
+            /**
+              * Pageable, PageRequest, PageRequestOf, Sort, Page<T>
+              */
+//            PageRequest pageRequest = PageRequest.of(0,10, new Sort(Sort.Direction.DESC,"name"));
+//
+//            Page<MemberV2> memberV2Page = memberV2Repository.findByNameStartingWith("hy", pageRequest);
+//
+//            List<MemberV2> contents = memberV2Page.getContent(); //조회된 데이터
+//            int totalPage = memberV2Page.getTotalPages(); //전체 페이지수
+//            boolean hasNextPage = memberV2Page.hasNext(); //다음페이지 존재여부
+//
+//            contents.stream()
+//                    .forEachOrdered(m-> System.out.println(m.getName()));
+//
+//            System.out.println(totalPage);
+//            System.out.println(hasNextPage);
+
+
         };
     }
+
+
+
+
+//    @Bean
+//    public CommandLineRunner run(ApplicationContext ctx) {
+//        return args -> {
+//
+//            MemberV2 member1 = MemberV2.builder()
+//                    .name("wcchoi")
+//                    .homeAddress(Address.builder()
+//                            .city("seoul")
+//                            .state("Korea")
+//                            .street("yeong-dong-dae-ro")
+//                            .zipcode(Zipcode.builder()
+//                                    .zip("06080")
+//                                    .plusFour("?")
+//                                    .build()
+//                            )
+//                            .build()
+//                    ).companyAddress(Address.builder()
+//                            .city("seoul")
+//                            .state("Korea")
+//                            .street("seoul-ro")
+//                            .zipcode(Zipcode.builder()
+//                                    .zip("06084")
+//                                    .plusFour("?")
+//                                    .build()
+//                            )
+//                            .build()
+//                    ).phoneNumber(PhoneNumber.builder()
+//                            .areaCode("82")
+//                            .localNumber("1090487331")
+//                            .build()
+//                    )
+//                    .build();
+//
+//            memberV2Repository.save(member1);
+//
+//            MemberV2 member2 = MemberV2.builder()
+//                    .name("hymoon")
+//                    .homeAddress(Address.builder()
+//                            .city("seoul")
+//                            .state("Korea")
+//                            .street("yeong-dong-dae-ro")
+//                            .zipcode(Zipcode.builder()
+//                                    .zip("06080")
+//                                    .plusFour("?")
+//                                    .build()
+//                            )
+//                            .build()
+//                    ).companyAddress(Address.builder()
+//                            .city("seoul")
+//                            .state("Korea")
+//                            .street("seoul-ro")
+//                            .zipcode(Zipcode.builder()
+//                                    .zip("06084")
+//                                    .plusFour("?")
+//                                    .build()
+//                            )
+//                            .build()
+//                    ).phoneNumber(PhoneNumber.builder()
+//                            .areaCode("82")
+//                            .localNumber("1092553405")
+//                            .build()
+//                    )
+//                    .build();
+//
+//            memberV2Repository.save(member2);
+//
+//            memberV2Repository.findByNameAndHomeAddress_City("hymoon","seoul")
+//                    .stream()
+//                    .forEach(m->{
+//                        System.out.println(m.getPhoneNumber().getLocalNumber());
+//                    });
+//
+//
+//            /**
+//             * Pageable, PageRequest, PageRequestOf, Sort, Page<T>
+//             */
+//            PageRequest pageRequest = PageRequest.of(0,10, new Sort(Sort.Direction.DESC,"name"));
+//
+//            Page<MemberV2> memberV2Page = memberV2Repository.findByNameStartingWith("hy", pageRequest);
+//
+//            List<MemberV2> contents = memberV2Page.getContent(); //조회된 데이터
+//            int totalPage = memberV2Page.getTotalPages(); //전체 페이지수
+//            boolean hasNextPage = memberV2Page.hasNext(); //다음페이지 존재여부
+//
+//            contents.stream()
+//                    .forEachOrdered(m-> System.out.println(m.getName()));
+//
+//            System.out.println(totalPage);
+//            System.out.println(hasNextPage);
+//
+//
+//
+//        };
+//    }
 
 //    public static void main(String[] args) {
 //

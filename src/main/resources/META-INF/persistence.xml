@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--<!DOCTYPE persistence [-->
+        <!--<!ENTITY persistence-unit-common-properties SYSTEM "out/production/resources/META-INF/persistence-unit-common-properties.xml">-->
+        <!--<!ELEMENT persistence (persistence-unit)>-->
+        <!--<!ELEMENT persistence-unit (class, properties)>-->
+        <!--<!ELEMENT class (#PCDATA)>-->
+        <!--<!ELEMENT properties (property)>-->
+        <!--<!ELEMENT property (#PCDATA)>-->
+
+    <!--]-->
+<!--&gt;-->
 <persistence
         xmlns="http://xmlns.jcp.org/xml/ns/persistence"
         version="2.1">
     <persistence-unit name="p-unit">
+
         <!--<class>com.cwoongc.study.jpa_fundmental.member.entity.Member</class>-->
         <!--<class>com.cwoongc.study.jpa_fundmental.member.entity.MemberM_1</class>-->
         <!--<class>com.cwoongc.study.jpa_fundmental.member.entity.Team</class>-->
@@ -23,10 +34,10 @@
         <!--<class>com.cwoongc.study.jpa_fundmental.delivery.entity.DeliveryV3</class>-->
 
         <!--Chap07_MappedSuperClass-->
-        <class>com.cwoongc.study.jpa_fundmental.item.entity.ItemV4</class>
-        <class>com.cwoongc.study.jpa_fundmental.item.entity.AlbumV4</class>
-        <class>com.cwoongc.study.jpa_fundmental.item.entity.MovieV4</class>
-        <class>com.cwoongc.study.jpa_fundmental.item.entity.BookV4</class>
+        <!--<class>com.cwoongc.study.jpa_fundmental.item.entity.ItemV4</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.item.entity.AlbumV4</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.item.entity.MovieV4</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.item.entity.BookV4</class>-->
 
         <!--Chap07_MappedSuperClass-->
         <!--<class>com.cwoongc.study.jpa_fundmental.member.entity.MemberV5</class>-->
@@ -62,10 +73,19 @@
         <!--<class>com.cwoongc.study.jpa_fundmental.board.entity.BoardDetailV3</class>-->
 
         <!--Chap0902_Value_embedded_Main-->
-        <class>com.cwoongc.study.jpa_fundmental.embedded_type.entity.MemberV2</class>
-        <class>com.cwoongc.study.jpa_fundmental.embedded_type.entity.PhoneServiceProvider</class>
+        <!--<class>com.cwoongc.study.jpa_fundmental.embedded_type.entity.MemberV2</class>-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.embedded_type.entity.PhoneServiceProvider</class>-->
+
+        <!--Chan1002_JPQL_Main-->
+        <class>com.cwoongc.study.jpa_fundmental.jpql.entity.JpMember</class>
+        <class>com.cwoongc.study.jpa_fundmental.jpql.entity.JpTeam</class>
 
 
+
+        <!--Chap1003_Criteria_Main-->
+        <!--<class>com.cwoongc.study.jpa_fundmental.criteria.entity.CrMember</class>-->
+
+        <!--&persistence-unit-common-properties;-->
 
         <properties>
             <!-- spring.datasource -->
@@ -87,19 +107,17 @@
 
             <!-- spring.jpa.hibernate.ddl-auto -->
             <property name="hibernate.hbm2ddl.auto" value="create"/>
-            
-            
+
+
             <property name="hibernate.physical_naming_strategy" value="com.cwoongc.study.jpa_fundmental.common.jpa.PhysicalNamingStrategyImpl"/>
-
-
-
-
-
-
-
-
-
         </properties>
 
+
+
+
     </persistence-unit>
+
+
+
+
 </persistence>
