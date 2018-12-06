@@ -38,7 +38,30 @@ public class Chap1002_JPQL_Main {
 //        TransactionConsumer.consume(emf, Chap1002_JPQL_Main::useJPQLLeftJoin);
 //        TransactionConsumer.consume(emf, Chap1002_JPQL_Main::useJPQLCollectionJoin);
 
-        TransactionConsumer.consume(emf, Chap1002_JPQL_Main::useJPQLFetchJoin);
+//        TransactionConsumer.consume(emf, Chap1002_JPQL_Main::useJPQLManyToOneFetchJoin);
+        TransactionConsumer.consume(emf, Chap1002_JPQL_Main::useJPQLOneToManyFetchJoin);
+
+
+
+
+    }
+
+
+    private static void useJPQLOneToManyFetchJoin(EntityManager entityManager) {
+
+        List<JpTeam> jpTeams = entityManager.createQuery("select t from JpTeam t join fetch t.members where t.name = :teamName"
+            ,JpTeam.class).setParameter("teamName","Finance")
+                .getResultList();
+
+        for(JpTeam t : jpTeams) {
+            System.out.println("teamname: "+t.getName()+", teamId: "+t.getId()+" {");
+            for(JpMember m : t.getMembers()) {
+                System.out.println("\tusername: "+m.getName()+", userId: "+m.getId());
+            }
+            System.out.println("}");
+        }
+
+
 
 
     }
@@ -51,7 +74,7 @@ public class Chap1002_JPQL_Main {
      * join fetch 시에 뒤에 쓰는 연관필에는 alias사용이 불가능하다.
      * @param entityManager
      */
-    private static void useJPQLFetchJoin(EntityManager entityManager) {
+    private static void useJPQLManyToOneFetchJoin(EntityManager entityManager) {
 
         List<JpMember> jpMembers = entityManager.createQuery("select m from JpMember m join fetch m.team", JpMember.class)
                 .getResultList();
