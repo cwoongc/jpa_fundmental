@@ -4,7 +4,6 @@ import com.cwoongc.study.jpa_fundmental.common.jpa.TransactionConsumer;
 import com.cwoongc.study.jpa_fundmental.composite_key.entity.ChildV1;
 import com.cwoongc.study.jpa_fundmental.composite_key.entity.ParentV1;
 import com.cwoongc.study.jpa_fundmental.composite_key.entity.id.ParentV1Id;
-import javafx.scene.Parent;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

@@ -31,6 +31,7 @@ apply plugin: "com.ewerk.gradle.plugins.querydsl"
 group = 'com.cwoongc.study'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -38,7 +39,8 @@ repositories {
 }
 
 
-def querydslVersion = "4.1.4"
+//def querydslVersion = "4.1.4"
+def querydslVersion = "4.2.1"
 querydsl {
     library = "com.querydsl:querydsl-apt:$querydslVersion"
     querydslDefault = true
@@ -52,6 +54,13 @@ project.afterEvaluate {
             project.querydsl.processors() + ',lombok.launch.AnnotationProcessorHider$AnnotationProcessor'
     ]
 }
+
+def querydslSrcDir = "src/querydsl/java"
+sourceSets.main.java.srcDirs += "$querydslSrcDir"
+//sourceSets.main.java.srcDirs.each {
+//    println it
+//}
+
 
 
 //def querydslOutputDir = "src/main/qclass"
@@ -128,6 +137,8 @@ dependencies {
     compile("com.querydsl:querydsl-core:$querydslVersion")
     compile("com.querydsl:querydsl-jpa:$querydslVersion")
     compile("com.querydsl:querydsl-sql:$querydslVersion")
+
+
 
 }
 

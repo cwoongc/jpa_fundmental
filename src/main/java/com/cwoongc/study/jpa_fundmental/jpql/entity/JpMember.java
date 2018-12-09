@@ -2,9 +2,7 @@ package com.cwoongc.study.jpa_fundmental.jpql.entity;
 
 import com.cwoongc.study.jpa_fundmental.jpql.entity.value.Address;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
 
-import javax.jdo.annotations.Join;
 import javax.persistence.*;
 
 @Entity(name="JpMember")
