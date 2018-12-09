@@ -7,6 +7,7 @@ import com.cwoongc.study.jpa_fundmental.jpql.entity.value.Address;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class Chap03_Persistence_Context_Management_Main {
 
@@ -16,6 +17,85 @@ public class Chap03_Persistence_Context_Management_Main {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("p-unit");
 
         TransactionConsumer.consume(emf,Chap03_Persistence_Context_Management_Main::learnEntity4States);
+
+        TransactionConsumer.consume(emf, Chap03_Persistence_Context_Management_Main::learnFlushTimming);
+    }
+
+
+    /**
+     * Flush 가 발생하는 타이밍은 다음 3가지가 있다.
+     *
+     * 1. flush 명시적 호출
+     * 2. entity transaction commit
+     * 3. JPQL 수행전
+     *
+     * entity manager의 find 메소드를 식별자(Id) 검색을 수행하면,
+     * 검색에 사용된 id가 managed entity instance 의 id이면 flush가 발생하지 않고 select 쿼리도 발생하지 않고,
+     * un-managed 이면 flush가 발생되고 나서 select가 수행된다.
+     *
+     * 본 예제는 JPQL 수행시 앞서 실행한 persist에 의해 저장된 쓰기지연 쿼리들이 flush되는지 확인하고,
+     * entity manager의 find 메소드의 id 검색시 flush 여부도 확인해본다.
+     *
+     * @param entityManager
+     */
+    private static void learnFlushTimming(EntityManager entityManager) {
+
+        JpMember m1 = JpMember.builder()
+                .name("wcchoi").age(39).build();
+        JpMember m2 = JpMember.builder()
+                .name("hymoon").age(35).build();
+
+        entityManager.persist(m1);
+        entityManager.persist(m2);
+
+        //Find ALL (JPQL)
+        entityManager.createQuery("select m from JpMember m",JpMember.class)
+                .getResultList() // flush occurs
+                .stream()
+                .forEach(m-> System.out.println(m));
+
+        ////////////////////////
+
+        JpMember m3 = JpMember.builder()
+                .name("swchoi").age(9).build();
+
+        entityManager.persist(m3);
+
+        //Find By Name (JPQL)
+        entityManager.createQuery("select m from JpMember m where m.name = :name",JpMember.class)
+                .setParameter("name","swchoi")
+                .getResultList() //flush occurs
+                .stream()
+                .forEach(m-> System.out.println(m));
+
+
+        ////////////////////////
+
+        JpMember m4 = JpMember.builder()
+                .name("sjchoi").age(2).build();
+
+        entityManager.persist(m4);
+
+        //Find By Id (JPQL)
+        entityManager.createQuery("select m from JpMember m where m.id = :id",JpMember.class)
+                .setParameter("id", 2L)
+                .getResultList() //flush occurs
+                .stream()
+                .forEach(m-> System.out.println(m));
+
+        //////////////////////
+
+        JpMember m5 = JpMember.builder()
+                .name("chkwon").age(67).build();
+
+        entityManager.persist(m5);
+
+        //Find By Id (find method of EntityManager)
+        JpMember mm1 =  entityManager.find(JpMember.class, m4.getId()); // flush not occurs!! (because the id exists in persistence context)
+        System.out.println(mm1);
+
+        JpMember mm2 = entityManager.find(JpMember.class, 1000L); // flush occurs!! (because the id doesn't exist in persistence context)
+        System.out.println(mm2);
     }
 
     /**
