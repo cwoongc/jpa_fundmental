@@ -2,6 +2,7 @@ package com.cwoongc.study.jpa_fundmental;
 
 import com.cwoongc.study.jpa_fundmental.common.jpa.TransactionConsumer;
 import com.cwoongc.study.jpa_fundmental.jpql.entity.JpMember;
+import com.cwoongc.study.jpa_fundmental.jpql.entity.value.Address;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -48,11 +49,35 @@ public class Chap03_Persistence_Context_Management_Main {
         // -- 엔티티 매니져의 clear() : "영속성 컨텍스트 초기화. 관리하던 엔티티 객체를 모두 분리",
         //                stop(): "영속성 컨텍스트 닫기. 관리하던 엔티티 객체를 모두 분리하고 영속성 컨텍스트의 동작을 정지시킴."
         //    을 통해서도 관리되던(managed) 엔티티 객체를 분리된(detached) 상태로 전이 시킬 수 있다.
-        // -- 분리된(detacted) 상태의 엔티티 객체를 다시 영속성 컨텍스트에 의해 관리되는(manged) 엔티티 객체로 상태를 전이하고 싶으면,
-        //    엔티티 매니져의 merge(T entity) 메소드를 명시적으로 호출해야 한다. (detached --> managed)
+        // -- 한번 분리된(detacted) 상태의 엔티티 객체는 다시는 관리되는(managed) 상태가 될 수 없다.
+        //    하지만 자신과 같은 Id를 가지는 '동등한' 엔티티 객체가 새롭게 생성되어 영속성 컨텍스트에서 관리되고(managed) 있다면
+        //    '동등한' 엔티티 객체에 자신의 값을 병합 시키는 것은 가능하다.
+        //    병합은 엔티티 매니져의 merge(T entity) 메소드를 명시적으로 호출하며 detached 엔티티 객체를 넘기면 된다.
         entityManager.detach(member); //managed --> detached
-//        entityManager.clear();
-        entityManager.merge(member); //find & merge (detached --> managed)
+        member.setAge(39); //detached 엔티티 객체의 age속성에 새로운 값 set
+
+        JpMember newMember = new JpMember();
+        newMember.setId(member.getId());
+        newMember.setAddress(Address.builder().city("seoul").state("korea").steet("30-7").build());
+
+        entityManager.merge(member); //find & merge(updated but not flushed) : new managed entity instance created & merged with detacted instance
+        entityManager.merge(newMember); // merge는 넘겨지는 인스튼스 값으로 영속성 컨텍스트의 managed 인스턴스를 overwrite 하는것. name과 age가 삭제된다.
+
+        JpMember member2 = entityManager.find(JpMember.class,member.getId()); // managed instance get
+        System.out.println(member);
+        System.out.println(newMember);
+        System.out.println(member2);
+        entityManager.flush(); //update sql flushed
+
+
+        if(member.getId() == member2.getId()) System.out.println("equality same");
+        else System.out.println("equality different");
+
+        if(member == member2) System.out.println("identity smae");
+        else  {
+            System.out.println("identity different");
+            member = member2;
+        }
 
 
         //4. 제거된(removed) 상태
@@ -61,7 +86,6 @@ public class Chap03_Persistence_Context_Management_Main {
         // -- 엔티티 매니져가 flush를 통해 영속성 컨텍스트의 엔티티 객체들의 상태를 DB로 내려보낼 때, DB에서 삭제대상 row가 되는 엔티티 객체의 상태이다.
         // -- 제거된(removed) 상태의 엔티티 객체를 다시 영속성 컨텍스트에 관리되는(managed) 상태로 전이시키고 싶으면,
         //    엔티티 매니져의 persist(Object entity) 메서드를 명시적으로 호출하면 된다. (removed --> managed)
-        entityManager.persist(member); // new --> managed
         entityManager.remove(member); // manged --> removed
         entityManager.flush(); // 엔티티 객체 상태를 DB로 내려보냄 : 여기서는 DB ROW DELETE
 
