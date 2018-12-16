@@ -25,7 +25,7 @@ public class JpMember {
     @Embedded
     private Address address;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name="team_id")
     private JpTeam team;
 

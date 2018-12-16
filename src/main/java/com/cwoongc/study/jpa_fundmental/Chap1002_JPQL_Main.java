@@ -40,6 +40,56 @@ public class Chap1002_JPQL_Main {
 
 //        TransactionConsumer.consume(emf, Chap1002_JPQL_Main::useJPQLManyToOneFetchJoin);
         TransactionConsumer.consume(emf, Chap1002_JPQL_Main::useJPQLOneToManyFetchJoin);
+//        TransactionConsumer.consume(emf, Chap1002_JPQL_Main::useJPQLGlobalLoadingStrategyOneToManyJoin);
+
+
+
+    }
+
+    private static void useJPQLGlobalLoadingStrategyOneToManyJoin(EntityManager entityManager) {
+
+        List<Object[]> results = entityManager.createQuery(
+                "select t, m from JpTeam t join t.members m where t.name = :name"
+        ).setParameter("name","Finance")
+                .getResultList();
+
+        results.stream()
+                .forEach(arr-> {
+                    JpTeam t = (JpTeam) arr[0];
+                    System.out.println(t);
+                    for(JpMember m : t.getMembers()) {
+                        System.out.println(m);
+                    }
+
+                });
+
+        entityManager.clear();
+
+        List<JpTeam> resultList = entityManager.createQuery("select t from JpTeam t join t.members m where t.name = :name", JpTeam.class)
+                .setParameter("name","Finance")
+                .getResultList();
+
+        resultList.stream()
+                .forEach(t-> {
+                    System.out.println(t);
+                    for(JpMember m : t.getMembers()) {
+                        System.out.println(m);
+                    }
+                });
+
+        entityManager.clear();
+
+        resultList = entityManager.createQuery("select t from JpTeam t where t.name = :name",JpTeam.class)
+                .setParameter("name","Finance")
+                .getResultList();
+
+        resultList.stream()
+                .forEach(t->{
+                    System.out.println(t);
+                    for(JpMember m : t.getMembers()) {
+                        System.out.println(m);
+                    }
+                });
 
 
 
@@ -49,7 +99,8 @@ public class Chap1002_JPQL_Main {
 
     private static void useJPQLOneToManyFetchJoin(EntityManager entityManager) {
 
-        List<JpTeam> jpTeams = entityManager.createQuery("select t from JpTeam t join fetch t.members where t.name = :teamName"
+        List<JpTeam> jpTeams = entityManager.createQuery(
+                "select t from JpTeam t join fetch t.members where t.name = :teamName"
             ,JpTeam.class).setParameter("teamName","Finance")
                 .getResultList();
 
@@ -61,6 +112,22 @@ public class Chap1002_JPQL_Main {
             System.out.println("}");
         }
 
+        entityManager.clear();
+
+        jpTeams = entityManager.createQuery("select distinct t from JpTeam t join fetch t.members where t.name = :name")
+                .setParameter("name","Finance")
+                .getResultList();
+
+        jpTeams.stream()
+                .forEach(t->{
+                    System.out.println(t);
+                    for(JpMember m : t.getMembers()) {
+                        System.out.println(m);
+                    }
+                });
+
+
+
 
 
 
@@ -68,10 +135,11 @@ public class Chap1002_JPQL_Main {
 
     /**
      * 패치 조인은 레이지 로딩을 하지않고 inner join SQL을 만들어 한번에 데이터를 가져오면서
-     * 조인 대상 2객체간 객체 그래프도 정상적으로 가져오는 JPQL 조인을 지칭한다.
+     * 조인 대상 2엔티티 객체간 객체 그래프도 정상적으로 가져오는 JPQL 조인을 지칭한다.
      *
      * join fetch 구문으로 패치 조인을 사용할 수 잇다.
      * join fetch 시에 뒤에 쓰는 연관필에는 alias사용이 불가능하다.
+     * 2개 이상의 컬렉션을 fetch 할 수 없다.
      * @param entityManager
      */
     private static void useJPQLManyToOneFetchJoin(EntityManager entityManager) {
@@ -85,8 +153,17 @@ public class Chap1002_JPQL_Main {
 
     }
 
+    /**
+     * JPQL에서는 '연관필드(다른 엔티티와 관계가 맺어진 필드)"를 이용해서 조인을 하도록 문법이 강제하는데,
+     * 컬렉션 조인이란 조인용 연관필드가 컬렉션인 경우, 즉 일대다 조인일때 이를 부르는 말이다.
+     * @param entityManager
+     */
     private static void useJPQLCollectionJoin(EntityManager entityManager) {
 
+        //외부조인을 연관관계에 있는 일대다 관계의 엔티티에 수행(컬렉션 외부조인)한 후,
+        //2개 엔티티 모두 select 대상으로 삼았다.
+        //따라서 한type의 결과만 받는 TypedQuery는 사용 불가하다.
+        //오브젝트 배열로 받고, 각각을 배열 0, 1 번 원소에서 unboxing 해야한다.
         List<Object[]> teamAndMembers = entityManager.createQuery("select t, m from JpTeam t left join t.members m")
                 .getResultList();
 

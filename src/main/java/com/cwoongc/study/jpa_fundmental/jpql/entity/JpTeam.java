@@ -21,7 +21,10 @@ public class JpTeam {
 
     private String name;
 
-    @OneToMany(mappedBy="team")
+    @OneToMany(
+            mappedBy="team"
+            ,fetch = FetchType.LAZY
+    )
     private List<JpMember> members = new ArrayList<>();
 
     @Builder
